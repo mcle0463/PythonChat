@@ -2,11 +2,11 @@
 # Greg McLeod
 # !/usr/bin/env python
 
-"""Function definitions that will manipulate data
-passed via the UI and csv files.
+"""Class that will instantiate a data object and 
+operate on data passed via the UI and csv files.
 """
 __author__ = "Greg McLeod"
-__version__ = "1.2."
+__version__ = "1.0"
 __maintainer__ = "Greg McLeod"
 __email__ = "mcle0463@algonquincollge.com"
 __status__ = "Dev"
@@ -17,13 +17,12 @@ import csv
 
 
 class DataObject(object):
-    """This class contains methods that will operate
-    on the data object
+    """A data object that can contain and manipulate csv file records
     """
 
     def __init__(self):
         """Creating a data object"""
-        self.input_file_path = "Quttinirpaaq_NP_Tundra_Plant_Phenology_2016-2017_data_1.csv"
+        self.input_file_path = "pythonchat\\functional\Quttinirpaaq_NP_Tundra_Plant_Phenology_2016-2017_data_1.csv"
         self.records = list()
         self.header = ""
         self.record_selected = -1
@@ -44,12 +43,13 @@ class DataObject(object):
             input_file.close()
         except OSError as e:
             print("I/O error({0}): {1}".format(e.errno, e.strerror))
+            print(self.input_file_path)
         except Exception:
             print("Unexpected error:", sys.exc_info()[0])
 
     def print_data(self, name):
         """Prints all records"""
-        print(name + "\n\n")
+        print(name + "\n")
         print(self.header)
         for record in self.records:
             print(record)
@@ -77,7 +77,7 @@ class DataObject(object):
             if t_record_selection >= 1 and t_record_selection <= len(self.records):
                 break
         print("Selected " + str(t_record_selection))
-        return t_record_selection
+        self.record_selected = t_record_selection
 
     def display_record(self):
         """displays currently selected list record"""
@@ -97,7 +97,9 @@ class DataObject(object):
     def delete_record(self):
         """Deletes currently selected list record"""
         if self.record_selected != -1:
-            print(self.record_selected)
             self.records.pop(self.record_selected)
+            print(self.record_selected)
+            print("has been deleted\n")
+            self.record_selected = -1
         else:
             print("please select a record")
