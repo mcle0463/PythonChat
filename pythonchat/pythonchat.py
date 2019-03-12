@@ -14,8 +14,9 @@ __status__ = "Dev"
 import sys
 import csv
 from functional.data_object import DataObject
+from presentational import user_interface
 
-
+user_interface.setup_gui()
 my_name = "Greg McLeod"
 data = DataObject()
 menu_selection = -1
