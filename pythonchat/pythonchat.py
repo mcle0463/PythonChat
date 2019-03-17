@@ -16,7 +16,8 @@ import csv
 from functional.data_object import DataObject
 from presentational import user_interface
 
-user_interface.setup_gui()
+# app = QtWidgets.QApplication(sys.argv)
+ex = user_interface.UserInterface()
 my_name = "Greg McLeod"
 data = DataObject()
 menu_selection = -1
@@ -24,7 +25,7 @@ data.record_selection = 0
 data.get_rows()
 data.print_data(my_name)
 
-while menu_selection != 0:
+while ex.selected != 0:
     print("\nMenu")
     print("1. Reload data set")
     print("2. Display full data set")
