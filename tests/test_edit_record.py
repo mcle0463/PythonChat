@@ -1,3 +1,13 @@
+# test_editrecord.py
 import pytest
-from data_object import DataObject
-from ChatApp import edit_record
+
+
+def test_edit_record(data_object):
+    # print(len(data_object.records))
+    assert len(data_object.records) == 10
+
+    test_record = data_object.records[data_object.record_selected]
+    assert len(test_record) != ""
+
+    data_object.edit_record("test input")
+    assert data_object.records[data_object.record_selected] == "test input"

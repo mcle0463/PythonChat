@@ -1,3 +1,7 @@
+# test_delete_record.py
 import pytest
-from data_object import DataObject
-from ChatApp import display_record
+
+
+def test_display_record(data_object):
+    # print(len(data_object.records))
+    assert len(data_object.records) == 10
