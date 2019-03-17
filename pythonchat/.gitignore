@@ -1,0 +1,28 @@
+# Byte-compiled
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Dist
+.Python
+build/
+
+# logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Tests
+.coverage
+.coverage.*
+.cache
+.pytest_cache/
+
+# Environments
+.env
+.venv
+env/
+venv/
+.python-version
+ENV/
+env.bak/
+venv.bak/
