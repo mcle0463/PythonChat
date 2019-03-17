@@ -42,13 +42,15 @@ while ex.selected != 0:
     elif menu_selection == 2:
         data.print_data(my_name)
     elif menu_selection == 3:
-        data.create_record()
+        t_record_data = input("Enter record data")
+        data.create_record(t_record_data)
     elif menu_selection == 4:
         data.select_record()
     elif menu_selection == 5:
         data.display_record()
     elif menu_selection == 6:
-        data.edit_record()
+        t_record_data = input("Enter the records new value")
+        data.edit_record(t_record_data)
     elif menu_selection == 7:
         data.delete_record()
     elif menu_selection == 0:

@@ -22,7 +22,7 @@ class DataObject(object):
 
     def __init__(self):
         """Creating a data object"""
-        self.input_file_path = "pythonchat\\functional\Quttinirpaaq_NP_Tundra_Plant_Phenology_2016-2017_data_1.csv"
+        self.input_file_path = "pythonchat\functional\Quttinirpaaq_NP_Tundra_Plant_Phenology_2016-2017_data_1.csv"
         self.records = list()
         self.header = ""
         self.record_selected = -1
@@ -61,11 +61,11 @@ class DataObject(object):
         #  print(index, row)
         #  'did ten'
 
-    def create_record(self):
+    def create_record(self, record_data):
         """Creates list record"""
         if self.record_selected != -1:
-            t_record_data = input("Enter record data")
-            self.records.insert(self.record_selected, t_record_data)
+            #t_record_data = input("Enter record data")
+            self.records.insert(self.record_selected, record_data)
         else:
             print("please select a record")
 
@@ -86,11 +86,11 @@ class DataObject(object):
         else:
             print("please select a record")
 
-    def edit_record(self):
+    def edit_record(self, record_data):
         """Edits currently selected list record"""
         if self.record_selected != -1:
-            t_record_data = input("Enter the records new value")
-            self.records[self.record_selected] = t_record_data
+            #t_record_data = input("Enter the records new value")
+            self.records[self.record_selected] = record_data
         else:
             print("please select a record")
 
