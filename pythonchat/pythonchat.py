@@ -1,7 +1,6 @@
 # pythonchat
 # Greg McLeod
 # !/usr/bin/env python
-
 """main
 """
 __author__ = "Greg McLeod"
@@ -13,48 +12,62 @@ __status__ = "Dev"
 # module imports
 import sys
 import csv
-from functional.data_object import DataObject
+from PyQt5 import QtCore, QtGui, QtWidgets
+from functional import data_object
 from presentational import user_interface
 
-# app = QtWidgets.QApplication(sys.argv)
-ex = user_interface.UserInterface()
-my_name = "Greg McLeod"
-data = DataObject()
-menu_selection = -1
+# TODO: Controller in separate class
+
+
+class Controller:
+    def __init__(self, data_obj):
+        self.data = data_obj
+
+    def get_rows(self):
+        # reload data
+        print("Button1\n")
+        self.data.get_rows()
+
+    def print_data(self):
+        # update text area
+        print("Button2\n")
+        return self.data.print_data()
+
+    def create_record(self, record_data):
+        # create a new record
+        print("Button3\n")
+        self.data.create_record(record_data)
+
+    def select_record(self, record_selection):
+        # select a new record
+        self.data.select_record(record_selection)
+
+    def display_one_record(self):
+        # show only one record
+        print("Button5\n")
+        return self.data.display_record()
+
+    def edit_record(self, record_data):
+        # edit a record
+        print("Button6\n")
+        self.data.edit_record(record_data)
+
+    def delete_record(self):
+        # delete a record
+        print("Button7\n")
+        self.data.delete_record()
+
+    def quit_pythonchat(self):
+        # quit - can remove this function
+        print("Exiting...\n")
+
+
+# main
+app = QtWidgets.QApplication(sys.argv)
+data = data_object.DataObject()
 data.record_selection = 0
 data.get_rows()
-data.print_data(my_name)
-
-while ex.selected != 0:
-    print("\nMenu")
-    print("1. Reload data set")
-    print("2. Display full data set")
-    print("3. Create new data record")
-    print("4. Select a record")
-    print("5. Display a record")
-    print("6. Edit a record")
-    print("7. Delete a record")
-    print("0. Exit")
-
-    menu_selection = int(input("\nMake a selection and press ENTER"), 10)
-    if menu_selection == 1:
-        data.get_rows()
-    elif menu_selection == 2:
-        data.print_data(my_name)
-    elif menu_selection == 3:
-        t_record_data = input("Enter record data")
-        data.create_record(t_record_data)
-    elif menu_selection == 4:
-        data.select_record()
-    elif menu_selection == 5:
-        data.display_record()
-    elif menu_selection == 6:
-        t_record_data = input("Enter the records new value")
-        data.edit_record(t_record_data)
-    elif menu_selection == 7:
-        data.delete_record()
-    elif menu_selection == 0:
-        print("Exiting...\n")
-        break
-    else:
-        print("Invalid Selection")
+data.print_data()
+controller = Controller(data)
+ex = user_interface.UserInterface(controller)
+sys.exit(app.exec_())

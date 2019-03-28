@@ -1,6 +1,6 @@
 import pytest
 
-
+#  Fixture for data object used across multiple tests
 @pytest.fixture(scope="module")
 def data_object():
     from pythonchat.functional.data_object import DataObject

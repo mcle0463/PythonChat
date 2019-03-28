@@ -1,12 +1,12 @@
-# self
+# data_object
 # Greg McLeod
 # !/usr/bin/env python
 
-"""Class that will instantiate a data object and 
+"""Class that will instantiate a data object and
 operate on data passed via the UI and csv files.
 """
 __author__ = "Greg McLeod"
-__version__ = "1.0"
+__version__ = "1.1"
 __maintainer__ = "Greg McLeod"
 __email__ = "mcle0463@algonquincollge.com"
 __status__ = "Dev"
@@ -14,6 +14,7 @@ __status__ = "Dev"
 # module imports
 import sys
 import csv
+import os
 
 
 class DataObject(object):
@@ -22,10 +23,11 @@ class DataObject(object):
 
     def __init__(self):
         """Creating a data object"""
-        self.input_file_path = "pythonchat\functional\Quttinirpaaq_NP_Tundra_Plant_Phenology_2016-2017_data_1.csv"
+        self.input_file_path = os.path.abspath(
+            "PythonChat\pythonchat\\functional\Quttinirpaaq_NP_Tundra_Plant_Phenology_2016-2017_data_1.csv")
         self.records = list()
         self.header = ""
-        self.record_selected = -1
+        self.record_selected = 0
 
     def get_rows(self):
         """Reads file and parses data to a list object"""
@@ -47,49 +49,39 @@ class DataObject(object):
         except Exception:
             print("Unexpected error:", sys.exc_info()[0])
 
-    def print_data(self, name):
+    def print_data(self):
         """Prints all records"""
-        print(name + "\n")
-        print(self.header)
+        data_string = "Greg McLeod" + "\n\n"
         for record in self.records:
-            print(record)
-        # for index, row in enumerate(str_data):
-        # count +=1
-        # if count % 10 == 0:
-        # if (index + 1) % 2 == 0:
-        # if ((index + 1) % 2) == 0:
-        #  print(index, row)
-        #  'did ten'
+            data_string += str(record)
+            data_string += "\n"
+        return data_string
 
     def create_record(self, record_data):
         """Creates list record"""
         if self.record_selected != -1:
-            #t_record_data = input("Enter record data")
             self.records.insert(self.record_selected, record_data)
         else:
             print("please select a record")
 
-    def select_record(self):
+    def select_record(self, selection):
         """Selects list record"""
-        while True:
-            t_record_selection = int(
-                input("Enter a record to select between 1 and " + str(len(self.records))), 10)
-            if t_record_selection >= 1 and t_record_selection <= len(self.records):
-                break
-        print("Selected " + str(t_record_selection))
-        self.record_selected = t_record_selection
+        print("select record")
+        if selection >= 1 and selection <= len(self.records):
+                # break
+            self.record_selected = selection
+            print("Selected " + str(selection))
 
     def display_record(self):
         """displays currently selected list record"""
         if self.record_selected != -1:
-            print(self.records[self.record_selected])
+            return str(self.records[self.record_selected])
         else:
             print("please select a record")
 
     def edit_record(self, record_data):
         """Edits currently selected list record"""
         if self.record_selected != -1:
-            #t_record_data = input("Enter the records new value")
             self.records[self.record_selected] = record_data
         else:
             print("please select a record")
