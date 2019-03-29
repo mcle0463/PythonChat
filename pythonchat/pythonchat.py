@@ -56,7 +56,7 @@ class Controller:
     def display_one_record(self):
         # show only one record
         self.state_data['command'] = 'display_one_record'
-        asyncio.get_event_loop().run_until_complete(self.process(self.state_data))
+        return asyncio.get_event_loop().run_until_complete(self.process(self.state_data))
 
     def edit_record(self, record_data):
         # edit a record
@@ -75,15 +75,14 @@ class Controller:
 
     async def process(self, command):
         # use json to send
+        # Greg McLeod
         y = json.dumps(command)
         async with websockets.connect(
                 'ws://localhost:8765') as websocket:
-            #name = input("What's your name? ")
             print("Sending:" + y + "from client")
             await websocket.send(y)
             incomming_data = await websocket.recv()
             return incomming_data
-            #print("recieved:" + incomming_data + "in client")
 
 
 # main

@@ -1,6 +1,14 @@
-#!/usr/bin/env python
+# pythonchat server
+# Greg McLeod
+# !/usr/bin/env python
+"""server main
+"""
+__author__ = "Greg McLeod"
+__version__ = "1.0"
+__maintainer__ = "Greg McLeod"
+__email__ = "mcle0463@algonquincollge.com"
+__status__ = "Dev"
 
-# WS server example that synchronizes state across clients
 
 import asyncio
 import json
@@ -8,50 +16,49 @@ import logging
 import websockets
 import data_object
 
+# global data object will be manipulated by multiple clients in final version
 data_obj = data_object.DataObject()
 
 
 def get_rows():
-    # reload data
+    """reload data"""
     data_obj.get_rows()
 
 
 def print_data():
-    # update text area
-    # print("Button2\n")
+    """update text area"""
     return data_obj.print_data()
 
 
 def create_record(record_data):
-    # create a new record
-    # print("Button3\n")
+    """create a new record"""
     data_obj.create_record(record_data)
 
 
 def select_record(record_selection):
-    # select a new record
+    """select a new record"""
     data_obj.select_record(record_selection)
 
 
 def display_one_record():
-    # show only one record
-    # print("Button5\n")
+    """show only one record"""
     return data_obj.display_record()
 
 
 def edit_record(record_data):
-    # edit a record
-    # print("Button6\n")
+    """edit a record"""
     data_obj.edit_record(record_data)
 
 
 def delete_record():
-    # delete a record
-    # print("Button7\n")
+    """delete a record"""
     data_obj.delete_record()
 
 
-async def hello(websocket, path):
+async def handle_requests(websocket, path):
+    """the function is the WS client send handler and is called
+        each time a client connects"""
+    # Greg McLeod
     send_data = ""
     request = await websocket.recv()
     print(request)
@@ -80,8 +87,8 @@ async def hello(websocket, path):
     print("sending:" + send_data + "from server\n")
     await websocket.send(send_data)
 
+# server main
 data_obj.get_rows()
-start_server = websockets.serve(hello, 'localhost', 8765)
-
+start_server = websockets.serve(handle_requests, 'localhost', 8765)
 asyncio.get_event_loop().run_until_complete(start_server)
 asyncio.get_event_loop().run_forever()

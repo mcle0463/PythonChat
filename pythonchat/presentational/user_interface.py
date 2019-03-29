@@ -1,7 +1,16 @@
+# user_interface
+# Greg McLeod
+# !/usr/bin/env python
+"""View
+"""
+__author__ = "Greg McLeod"
+__version__ = "1.1"
+__maintainer__ = "Greg McLeod"
+__email__ = "mcle0463@algonquincollge.com"
+__status__ = "Dev"
+
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
-
-#from data_object import DataObject
 
 
 class UserInterface(QtWidgets.QMainWindow):
@@ -114,6 +123,7 @@ class UserInterface(QtWidgets.QMainWindow):
         # add widget to main layout
         main_layout.addLayout(self.widget_layout)
         self.statusBar()
+        self.statusBar().showMessage("Greg McLeod - mcle0463 - 2019")
         self.setGeometry(500, 150, 350, 400)
         self.setWindowTitle('Python Chat - Greg McLeod')
         self.show()
@@ -121,24 +131,18 @@ class UserInterface(QtWidgets.QMainWindow):
     def reload_button_clicked(self):
         sender = self.sender()
         self.status_label.setText("Currently selected: " + sender.text())
-        self.statusBar().showMessage(sender.objectName() +
-                                     ' was pressed')
         self.control.get_rows()
         self.output_textarea.setText(self.control.print_data())
 
     def display_full_data_button_clicked(self):
         sender = self.sender()
         self.status_label.setText("Currently selected: " + sender.text())
-        self.statusBar().showMessage(sender.objectName() +
-                                     ' was pressed')
         self.output_textarea.setText(self.control.print_data())
         # self.control.print_data()
 
     def create_new_record_button_clicked(self):
         sender = self.sender()
         self.status_label.setText("Currently selected: " + sender.text())
-        self.statusBar().showMessage(sender.objectName() +
-                                     ' was pressed')
         text, ok = QtWidgets.QInputDialog.getText(
             self, 'New Record', 'Enter record data:')
         if ok:
@@ -156,8 +160,6 @@ class UserInterface(QtWidgets.QMainWindow):
     def display_single_record_button_clicked(self):
         sender = self.sender()
         self.status_label.setText("Currently selected: " + sender.text())
-        self.statusBar().showMessage(sender.objectName() +
-                                     ' was pressed')
         msg = QtWidgets.QMessageBox()
         msg.setIcon(QtWidgets.QMessageBox.Information)
         msg.setText(self.control.display_one_record())
@@ -169,8 +171,6 @@ class UserInterface(QtWidgets.QMainWindow):
     def edit_record_button_clicked(self):
         sender = self.sender()
         self.status_label.setText("Currently selected: " + sender.text())
-        self.statusBar().showMessage(sender.objectName() +
-                                     ' was pressed')
         text, ok = QtWidgets.QInputDialog.getText(
             self, 'Text Input Dialog', 'Enter record data:')
         if ok:
@@ -180,14 +180,10 @@ class UserInterface(QtWidgets.QMainWindow):
     def delete_record_button_clicked(self):
         sender = self.sender()
         self.status_label.setText("Currently selected: " + sender.text())
-        self.statusBar().showMessage(sender.objectName() +
-                                     ' was pressed')
         self.control.delete_record()
         self.output_textarea.setText(self.control.print_data())
 
     def exit_pychat_button_clicked(self):
         sender = self.sender()
         self.status_label.setText("Currently selected: " + sender.text())
-        self.statusBar().showMessage(sender.objectName() +
-                                     ' was pressed')
         self.control.quit_pythonchat()
