@@ -1,10 +1,13 @@
 import pytestqt
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 def test_buttons(qtbot):
-    from pythonchat.presentational.user_interface import UserInterface
-    widget = UserInterface()
+    from pythonchat.view.user_interface import UserInterface
+    from pythonchat.controller.controller import Controller
+    controller = Controller()
+    widget = UserInterface(controller)
     qtbot.addWidget(widget)
    # qtbot.mouseClick(widget.size, QtCore.Qt.LeftButton)
   # https://doc.qt.io/qt-5/qsize.html#QSize

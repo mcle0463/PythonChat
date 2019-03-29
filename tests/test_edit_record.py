@@ -3,7 +3,6 @@ import pytest
 
 
 def test_edit_record(data_object):
-    # print(len(data_object.records))
     assert len(data_object.records) == 10
 
     test_record = data_object.records[data_object.record_selected]
