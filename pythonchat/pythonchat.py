@@ -12,6 +12,9 @@ __status__ = "Dev"
 # module imports
 import sys
 import csv
+import asyncio
+import websockets
+import json
 from PyQt5 import QtCore, QtGui, QtWidgets
 from functional import data_object
 from presentational import user_interface
@@ -20,54 +23,71 @@ from presentational import user_interface
 
 
 class Controller:
-    def __init__(self, data_obj):
-        self.data = data_obj
+    def __init__(self):
+        # def __init__(self, data_obj):
+        self.state_data = {'command': '',
+                           'data': '', 'selection': 0}
 
     def get_rows(self):
         # reload data
-        print("Button1\n")
-        self.data.get_rows()
+        # print("Button1\n")
+        self.state_data['command'] = 'get_rows'
+        asyncio.get_event_loop().run_until_complete(self.process(self.state_data))
+        # self.data.get_rows()
 
     def print_data(self):
         # update text area
-        print("Button2\n")
-        return self.data.print_data()
+        self.state_data['command'] = 'print_data'
+        return asyncio.get_event_loop().run_until_complete(self.process(self.state_data))
 
     def create_record(self, record_data):
         # create a new record
-        print("Button3\n")
-        self.data.create_record(record_data)
+        self.state_data['command'] = 'create_record'
+        self.state_data['data'] = record_data
+        asyncio.get_event_loop().run_until_complete(
+            self.process(self.state_data))
 
     def select_record(self, record_selection):
         # select a new record
-        self.data.select_record(record_selection)
+        self.state_data['command'] = 'select_record'
+        self.state_data['selection'] = record_selection
+        asyncio.get_event_loop().run_until_complete(self.process(self.state_data))
 
     def display_one_record(self):
         # show only one record
-        print("Button5\n")
-        return self.data.display_record()
+        self.state_data['command'] = 'display_one_record'
+        asyncio.get_event_loop().run_until_complete(self.process(self.state_data))
 
     def edit_record(self, record_data):
         # edit a record
-        print("Button6\n")
-        self.data.edit_record(record_data)
+        self.state_data['command'] = 'edit_record'
+        self.state_data['data'] = record_data
+        asyncio.get_event_loop().run_until_complete(self.process(self.state_data))
 
     def delete_record(self):
         # delete a record
-        print("Button7\n")
-        self.data.delete_record()
+        self.state_data['command'] = 'delete_record'
+        asyncio.get_event_loop().run_until_complete(self.process(self.state_data))
 
     def quit_pythonchat(self):
         # quit - can remove this function
         print("Exiting...\n")
 
+    async def process(self, command):
+        # use json to send
+        y = json.dumps(command)
+        async with websockets.connect(
+                'ws://localhost:8765') as websocket:
+            #name = input("What's your name? ")
+            print("Sending:" + y + "from client")
+            await websocket.send(y)
+            incomming_data = await websocket.recv()
+            return incomming_data
+            #print("recieved:" + incomming_data + "in client")
+
 
 # main
 app = QtWidgets.QApplication(sys.argv)
-data = data_object.DataObject()
-data.record_selection = 0
-data.get_rows()
-data.print_data()
-controller = Controller(data)
+controller = Controller()
 ex = user_interface.UserInterface(controller)
 sys.exit(app.exec_())
